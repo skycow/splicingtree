@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int cost(string*, string[2], string);
+int cost(string[], string[][30], string);
 
 int main() {
 
@@ -39,7 +39,7 @@ int main() {
 	return 0;
 }
 
-int cost(string* name, string** input, string npe) {
+int cost(string name[], string input[][30], string npe) {
 
 	return 0;
 }
