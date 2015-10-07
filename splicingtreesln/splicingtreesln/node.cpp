@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -20,14 +21,32 @@ node::node(char newName) {
 
 void node::insert(char val) {
 
-	node* temp;
-	temp = new node(val);
-
-	if (this->right == NULL) {
-		if (this->value != val) {
-			this->right = temp;
-		}
+	//check if leaf node
+	if (this->value != 'h' || this->value != 'v') {
 	}
+	//check for empty right branch
+	else if (this->right == NULL) {
+
+		node* temp;
+		temp = new node(val);
+		
+		this->right = temp;
+	}
+	//check for empty right branch
+	else if (this->left == NULL) {
+		node* temp;
+		temp = new node(val);
+
+		this->left = temp;
+	}
+	//continue down if full branches
+	else if (this->left != NULL) {
+		this->left->insert(val);
+	}
+	else {
+		cout << "Error 1" << endl;
+	}
+	return;
 }
 
 
