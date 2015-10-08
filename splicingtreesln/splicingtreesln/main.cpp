@@ -2,7 +2,7 @@
 #include<fstream>
 #include<sstream>
 #include<string>
-#include "node.cpp"
+#include "node.h"
 
 using namespace std;
 
@@ -35,26 +35,28 @@ int main() {
 	int area;
 	area = cost(name, input, npe1);
 
-	
-
 	return 0;
 }
 
 int cost(string name[], double input[][30], string npe) {
 
-	//node* root = NULL;
+	node* root = NULL;
 
 	for (int i = 1; i <= npe.size(); i++) {
-		//cout << npe[npe.size() - i];
-		//if (root == NULL) {
-			//node* temp;
-			//temp = new node(npe[npe.size() - i]);
-			//root = temp;
-		//}
-		//else {
-		//	root->insert(npe[npe.size() - i]);
-		//}
+		cout << npe[npe.size() - i];
+		if (root == NULL) {
+			node* temp;
+			temp = new node(npe[npe.size() - i]);
+			root = temp;
+		}
+		else {
+			root->insert(npe[npe.size() - i]);
+		}
 
+	}
+
+	if (root != NULL) {
+		root->printTree(0);
 	}
 
 	return 0;

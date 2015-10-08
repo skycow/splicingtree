@@ -25,6 +25,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="node.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="node.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{57E8D71E-C332-46A7-B14F-C9CBB2A4ADA5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
