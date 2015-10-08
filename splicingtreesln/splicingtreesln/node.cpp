@@ -1,12 +1,65 @@
 #include "node.h"
 
+dim::dim(double h, double w) {
+	height = h;
+	width = w;
+	next = NULL;
+}
+
+void dim::instert(dim* in) {
+	if (this->next == NULL) {
+		this->next = in;
+	}
+	else {
+		this->next->instert(in);
+	}
+}
+
+double dim::findMin() {
+	double curr = (this->height * this->width);
+	if (this->next == NULL) {
+		return curr;
+	}
+	else {
+		return findMin(curr);
+	}
+}
+
+double dim::findMin(double prev) {
+	double curr = (this->height * this->width);
+	if (this->next == NULL) {
+		if (curr < prev) {
+			return curr;
+		}
+		else {
+			return prev;
+		}
+	}
+	else {
+		double next = findMin(curr);
+
+	}
+}
+
 node::node(char newName) {
 	value = newName;
 	left = NULL;
 	right = NULL;
+	height = NULL;
+	width = NULL;
+	dims = NULL;
 }
 
-void node::insert(char val) {
+node::node(char newName, double h, double w) {
+	value = newName;
+	left = NULL;
+	right = NULL;
+	height = h;
+	width = w;
+	dims = NULL;
+}
+
+void node::insert(node* newNode) {
 
 	//check if leaf node
 	if (this->value != 'h' && this->value != 'v') {
@@ -14,24 +67,18 @@ void node::insert(char val) {
 	}
 	//check for empty right branch
 	
-	if (this->right == NULL) {
-		node* temp;
-		temp = new node(val);
-		
-		this->right = temp;
+	if (this->right == NULL) {		
+		this->right = newNode;
 		return;
 	}
 	//check for empty right branch
 	if (this->left == NULL) {
-		node* temp;
-		temp = new node(val);
-
-		this->left = temp;
+		this->left = newNode;
 		return;
 	}
 	//continue down if full branches
 	if (this->left != NULL) {
-		this->left->insert(val);
+		this->left->insert(newNode);
 		return;
 	}
 
@@ -41,6 +88,34 @@ void node::insert(char val) {
 	cout << "Error1" << endl;
 	return;
 }
+
+double node::calculate() {
+	
+	if (this->left == NULL && this->right == NULL) {
+		return this->dims->findMin();
+	}
+	
+	
+	
+	double area;
+	return area;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void node::printTree(int count) {
 	if (this->left == NULL && this->right == NULL) {

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int cost(string[], double[][30], string);
+double cost(string[], double[][30], string);
 
 int main() {
 
@@ -32,32 +32,51 @@ int main() {
 	}
 
 	string npe1 = "12v3v4v5v6v7v8v9vavbvcvdvevfvgvivjvkvlv";
-	int area;
-	area = cost(name, input, npe1);
+	string npe2 = "12h3h4h5h6h7h8h9hahbhchdhehfhghihjhkhlh";
+	cout << cost(name, input, npe1) << endl;
+	cout << cost(name, input, npe2) << endl;
 
 	return 0;
 }
 
-int cost(string name[], double input[][30], string npe) {
-
+double cost(string name[], double input[][30], string npe) {
+	//create tree
 	node* root = NULL;
 
+	//insert nodes
 	for (int i = 1; i <= npe.size(); i++) {
-		cout << npe[npe.size() - i];
+		int curr = npe.size() - i;
+		char value = npe[curr];
+		node* temp;
+		double height, width;
+		if (value != 'h' && value != 'v') {
+			height = sqrt(input[0][curr] / input[1][curr]);
+			width = input[0][curr] / height;
+
+			cout << height << " and " << width << endl;
+			
+			temp = new node(value, height, width);
+		}
+		else {
+			temp = new node(value);
+		}
+
 		if (root == NULL) {
-			node* temp;
-			temp = new node(npe[npe.size() - i]);
+			
 			root = temp;
 		}
 		else {
-			root->insert(npe[npe.size() - i]);
+			root->insert(temp);
 		}
 
 	}
 
+	//print tree
 	if (root != NULL) {
 		root->printTree(0);
 	}
 
-	return 0;
+	double area = root->calculate();
+
+	return area;
 }
