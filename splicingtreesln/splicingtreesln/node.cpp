@@ -6,39 +6,24 @@ dim::dim(double h, double w) {
 	next = NULL;
 }
 
-void dim::instert(dim* in) {
+void dim::insert(dim* in) {
 	if (this->next == NULL) {
 		this->next = in;
 	}
 	else {
-		this->next->instert(in);
+		this->next->insert(in);
 	}
 }
 
 double dim::findMin() {
 	double curr = (this->height * this->width);
-	if (this->next == NULL) {
-		return curr;
-	}
-	else {
-		return findMin(curr);
-	}
-}
-
-double dim::findMin(double prev) {
-	double curr = (this->height * this->width);
-	if (this->next == NULL) {
-		if (curr < prev) {
-			return curr;
-		}
-		else {
-			return prev;
+	if (this->next != NULL) {
+		double next = this->next->findMin();
+		if (next < curr){
+			return next;
 		}
 	}
-	else {
-		double next = findMin(curr);
-
-	}
+	return curr;
 }
 
 node::node(char newName) {
@@ -56,7 +41,14 @@ node::node(char newName, double h, double w) {
 	right = NULL;
 	height = h;
 	width = w;
-	dims = NULL;
+	dim* dim1, *dim2;
+	dim1 = new dim(h, w);
+	dims = dim1;
+	if (h != w){
+		dim2 = new dim(w, h);
+		dims->insert(dim2);
+	}
+
 }
 
 void node::insert(node* newNode) {
@@ -94,20 +86,157 @@ double node::calculate() {
 	if (this->left == NULL && this->right == NULL) {
 		return this->dims->findMin();
 	}
+	if (this->right != NULL){
+		this->right->calculate();
+	}
+	if (this->left != NULL){
+		this->left->calculate();
+	}
 	
+	if (this->value == 'h')
+	//max add
+	this->dims = this->right->dims->calcDimsH(this->left->dims);
+
+
+	//if (this->value == 'v')
+	//add max
+	//this->dims = this->right->dims->calcDimsV(this->left->dims);
+
+	this->dims->discard();
 	
-	
-	double area;
-	return area;
+	return this->dims->findMin();
 }
 
+dim* dim::calcDimsH(dim* left){
+	if (this->next == NULL){
+		return left->calcDimsH(this->height, this->width);	
+	}
+	return left->calcDimsH(this->height, this->width, this->next->calcDimsH(left));
+}
+
+dim* dim::calcDimsH(double height, double width, dim* prev){
+	if (this->next == NULL){
+		dim* newAdd;
+		if (this->width > width){
+			newAdd = new dim(this->height + height, this->width);
+		}
+		else{
+			newAdd = new dim(this->height + height, width);
+		}
+		newAdd->next = prev;
+		return newAdd;
+
+	}
+	else{
+
+		dim* newAdd;
+		if (this->width > width){
+			newAdd = new dim(this->height + height, this->width);
+		}
+		else{
+			newAdd = new dim(this->height + height, width);
+		}
+
+		newAdd->next = this->next->calcDimsH(height, width, prev);
+		return newAdd;
+	}
+}
+
+dim* dim::calcDimsH(double height, double width){
+	if (this->next == NULL){
+		dim* newAdd;
+		if (this->width > width){
+			newAdd = new dim(this->height + height, this->width);
+		}
+		else{
+			newAdd = new dim(this->height + height, width);
+		}
+		return newAdd;
+
+	}
+	else{
+
+		dim* newAdd;
+		if (this->width > width){
+			newAdd = new dim(this->height + height, this->width);
+		}
+		else{
+			newAdd = new dim(this->height + height, width);
+		}
+
+		newAdd->next = this->next->calcDimsH(height, width);
+		return newAdd;
+	}
+}
+
+void dim::discard(){
+	dim minDim = this->min(this->height, this->width);
+
+	this->discard(minDim.height, minDim.width);
+}
+
+dim* dim::discard(double h, double w){
+	if (this->next == NULL){
+		return NULL;
+	}
+
+	if (this->next->next == NULL){
+
+		if (this->next->height > h && this->next->width > w){
+			delete this->next;
+			return NULL;
+		}
+		else{
+			return this->next;
+		}
+	}
+
+	
+	if (this->next->height > h && this->next->width > w){
+		dim *temp = this->next->next;
+		delete this->next;
+		return temp;
+	}
+	else{
+		return this->next->discard(h, w);
+	}
+}
+
+dim dim::min(){
+	if (this->next == NULL){
+		dim ret(this->height, this->width);
+		return ret;
+	}
+	else{
+		dim ret = this->next->min();
 
 
+		if (this->height < ret.height && this->width < ret.width){
+			dim res(this->height, this->width);
+			return res;
+		}
+		else{
+			return ret;
+		}
+	}
+	//return this->min(this->height, this->width);
+}
 
-
-
-
-
+dim dim::min(double mh, double mw){
+	if (this->next == NULL){
+		if (this->height < mh && this->width < mw){
+			dim ret(this->height, this->width);
+			return ret;
+		}
+		else{
+			dim ret(mh, mw);
+			return ret;
+		}
+	}
+	else{
+		dim minDim = this->min(this->height, this->width);
+	}
+}
 
 
 

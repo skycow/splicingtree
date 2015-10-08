@@ -13,10 +13,19 @@ class dim {
 	dim* next;
 public:
 	dim(double, double);
-	void instert(dim*);
+	void insert(dim*);
 	double findMin();
 	double findMin(double);
-	double area();
+	dim* calcDimsH(dim*);
+	dim* calcDimsH(double, double, dim*);
+	dim* calcDimsH(double, double);
+	dim* calcDimsV(dim*);
+	dim* calcDimsV(double, double);
+	void discard();
+	dim* discard(double, double);
+	dim min();
+	//dim min(dim);
+	dim min(double, double);
 
 };
 
