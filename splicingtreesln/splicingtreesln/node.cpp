@@ -102,7 +102,7 @@ double node::calculate() {
 	//add max
 	//this->dims = this->right->dims->calcDimsV(this->left->dims);
 
-	this->dims->discard();
+	//this->dims->discard();
 	
 	return this->dims->findMin();
 }
@@ -175,19 +175,23 @@ void dim::discard(){
 	this->discard(minDim.height, minDim.width);
 }
 
-dim* dim::discard(double h, double w){
+void dim::discard(double h, double w){
 	if (this->next == NULL){
-		return NULL;
+		return;
+	}
+	else{
+		this->next->discard(h, w);
 	}
 
 	if (this->next->next == NULL){
 
 		if (this->next->height > h && this->next->width > w){
 			delete this->next;
-			return NULL;
+			this->next = NULL;
+			return;
 		}
 		else{
-			return this->next;
+			return;
 		}
 	}
 
@@ -195,10 +199,11 @@ dim* dim::discard(double h, double w){
 	if (this->next->height > h && this->next->width > w){
 		dim *temp = this->next->next;
 		delete this->next;
-		return temp;
+		this->next = temp;
+		return;
 	}
 	else{
-		return this->next->discard(h, w);
+		return;
 	}
 }
 

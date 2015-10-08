@@ -15,7 +15,7 @@ int main() {
 	string name[30];
 	double input[2][30];
 	string line;
-	ifstream fin("input.txt");
+	ifstream fin("input2.txt");
 
 	if (fin.is_open()) {
 		int count = 0;
@@ -32,7 +32,8 @@ int main() {
 	}
 
 	//string npe1 = "12v3v4v5v6v7v8v9vavbvcvdvevfvgvivjvkvlv";
-	string npe2 = "12h3h4h5h6h7h8h9hahbhchdhehfhghihjhkhlh";
+	string npe2 = "12h3h4h5h6h";//7h8h9hahbhchdhehfhghihjhkhlh";
+	
 	//cout << cost(name, input, npe1) << endl;
 	cout << cost(name, input, npe2) << endl;
 	

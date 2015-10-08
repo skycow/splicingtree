@@ -22,7 +22,7 @@ public:
 	dim* calcDimsV(dim*);
 	dim* calcDimsV(double, double);
 	void discard();
-	dim* discard(double, double);
+	void discard(double, double);
 	dim min();
 	//dim min(dim);
 	dim min(double, double);
