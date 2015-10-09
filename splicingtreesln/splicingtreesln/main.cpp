@@ -15,7 +15,7 @@ int main() {
 	string name[30];
 	double input[2][30];
 	string line;
-	ifstream fin("input2.txt");
+	ifstream fin("input.txt");
 
 	if (fin.is_open()) {
 		int count = 0;
@@ -31,11 +31,13 @@ int main() {
 		cout << "Unable to open file." << endl;
 	}
 
-	//string npe1 = "12v3v4v5v6v7v8v9vavbvcvdvevfvgvivjvkvlv";
-	string npe2 = "12h3h4h5h6h";//7h8h9hahbhchdhehfhghihjhkhlh";
-	
-	//cout << cost(name, input, npe1) << endl;
+	string npe1 = "12v3v4v5v6v7v8v9vavbvcvdvevfvgvivjvkvlv";
+	string npe2 = "12h3h4h5h6h7h8h9hahbhchdhehfhghihjhkhlh";
+	//string npe3 = "213546H7VHVa8V9HcVHgHibdHkVHfeHVlHVjHVH";
+	string npe3 = "213546h7vhva8v9hcvhghibdhkvhfehvlhvjhvh";
+	cout << cost(name, input, npe1) << endl;
 	cout << cost(name, input, npe2) << endl;
+	cout << cost(name, input, npe3) << endl;
 	
 
 	return 0;

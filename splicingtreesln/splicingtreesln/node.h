@@ -38,12 +38,15 @@ class node {
 	double height;
 	double width;
 	vector<pair<double, double>> dims;
+	double findMin();
 public:
 	node(char);
 	node(char, double, double);
-	void insert(node*);
+	bool insert(node*);
 	void printTree(int);
 	double calculate();
+	void calculateH(vector<pair<double, double>>, vector<pair<double, double>>);
+	void calculateV(vector<pair<double, double>>, vector<pair<double, double>>);
 
 };
 

@@ -60,39 +60,55 @@ node::node(char newName, double h, double w) {
 
 }
 
-void node::insert(node* newNode) {
+bool node::insert(node* newNode) {
 
 	//check if leaf node
 	if (this->value != 'h' && this->value != 'v') {
-		return;
+		return false;
 	}
 	//check for empty right branch
-	
-	if (this->right == NULL) {		
+	bool success;
+	if (this->right == NULL && this->value != newNode->value) {		
 		this->right = newNode;
-		return;
+		return true;
 	}
+	else {
+		if (this->right->insert(newNode)) {
+			return true;
+		}
+	}
+
 	//check for empty right branch
 	if (this->left == NULL) {
 		this->left = newNode;
-		return;
+		return true;
 	}
-	//continue down if full branches
-	if (this->left != NULL) {
-		this->left->insert(newNode);
-		return;
+	else {
+		if (this->left->insert(newNode)) {
+			return true;
+		}
+		else {
+			//cout << "Error 1" << endl;
+		}
 	}
-
-	//else {
-		//cout << "Error 1" << endl;
+	//cout << "Error 1.2" << endl;
+	return false;
+	////continue down if full branches
+	//if (this->left != NULL) {
+	//	this->left->insert(newNode);
+	//	return;
 	//}
-	cout << "Error1" << endl;
-	return;
+	//
+	////else {
+	//	//cout << "Error 1" << endl;
+	////}
+	//cout << "Error1" << endl;
+	//return;
 }
 
 double node::calculate(){
 	if (this->left == NULL && this->right == NULL) {
-		return this->dims->findMin();
+		return this->findMin();
 	}
 	if (this->right != NULL){
 		this->right->calculate();
@@ -100,10 +116,68 @@ double node::calculate(){
 	if (this->left != NULL){
 		this->left->calculate();
 	}
-	if (this->value == 'h')
-		//max add
+	if (this->value == 'h') {
+		this->calculateH(this->right->dims, this->left->dims);
+	}
+	if (this->value == 'v') {
+		this->calculateV(this->right->dims, this->left->dims);
+	}
+
+	return this->findMin();
 		
 }
+
+double node::findMin() {
+	double area = 0, curr;
+	for (int i = 0; i < dims.size(); i++) {
+		curr = dims[i].first * dims[i].second;
+		if (area == 0) {
+			area = curr;
+		}
+		else if (curr < area) {
+			area = curr;
+		}
+	}
+
+	return area;
+}
+
+void node::calculateH(vector<pair<double, double>> right, vector<pair<double, double>> left) {
+	for (int i = 0; i < right.size(); i++) {
+		for (int j = 0; j < left.size(); j++) {
+			double max;
+			if (right[i].second > left[j].second) {
+				max = right[i].second;
+			}
+			else {
+				max = left[j].second;
+			}
+
+			pair<double, double> newDim(right[i].first + left[j].first, max);
+			this->dims.push_back(newDim);
+		}
+	}
+}
+
+void node::calculateV(vector<pair<double, double>> right, vector<pair<double, double>> left) {
+	for (int i = 0; i < right.size(); i++) {
+		for (int j = 0; j < left.size(); j++) {
+			double max;
+			if (right[i].first > left[j].first) {
+				max = right[i].first;
+			}
+			else {
+				max = left[j].first;
+			}
+
+			pair<double, double> newDim(max, right[i].second + left[j].second);
+			this->dims.push_back(newDim);
+		}
+	}
+}
+
+
+
 
 
 /*
