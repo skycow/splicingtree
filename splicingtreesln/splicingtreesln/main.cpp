@@ -2,6 +2,7 @@
 #include<fstream>
 #include<sstream>
 #include<string>
+#include<cmath>
 #include "node.h"
 
 using namespace std;
