@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <utility>
 
 using namespace std;
 
@@ -35,7 +37,7 @@ class node {
 	node* right;
 	double height;
 	double width;
-	dim* dims;
+	vector<pair<double, double>> dims;
 public:
 	node(char);
 	node(char, double, double);

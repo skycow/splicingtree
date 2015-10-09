@@ -32,7 +32,7 @@ node::node(char newName) {
 	right = NULL;
 	height = NULL;
 	width = NULL;
-	dims = NULL;
+	//dims = NULL;
 }
 
 node::node(char newName, double h, double w) {
@@ -41,13 +41,22 @@ node::node(char newName, double h, double w) {
 	right = NULL;
 	height = h;
 	width = w;
-	dim* dim1, *dim2;
-	dim1 = new dim(h, w);
-	dims = dim1;
+	pair<double, double> newDim(h,w);
+	
+	dims.push_back(newDim);
 	if (h != w){
-		dim2 = new dim(w, h);
-		dims->insert(dim2);
+		newDim.first = w;
+		newDim.second = h;
+		dims.push_back(newDim);
 	}
+
+	//dim* dim1, *dim2;
+	//dim1 = new dim(h, w);
+	//dims = dim1;
+	//if (h != w){
+	//	dim2 = new dim(w, h);
+	//	dims->insert(dim2);
+	//}
 
 }
 
@@ -81,6 +90,23 @@ void node::insert(node* newNode) {
 	return;
 }
 
+double node::calculate(){
+	if (this->left == NULL && this->right == NULL) {
+		return this->dims->findMin();
+	}
+	if (this->right != NULL){
+		this->right->calculate();
+	}
+	if (this->left != NULL){
+		this->left->calculate();
+	}
+	if (this->value == 'h')
+		//max add
+		
+}
+
+
+/*
 double node::calculate() {
 	
 	if (this->left == NULL && this->right == NULL) {
@@ -105,7 +131,7 @@ double node::calculate() {
 	//this->dims->discard();
 	
 	return this->dims->findMin();
-}
+}*/
 
 dim* dim::calcDimsH(dim* left){
 	if (this->next == NULL){
