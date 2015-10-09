@@ -1,3 +1,8 @@
+//Skyler Cowley
+//A01209720
+//ECE 5460
+//HW3
+
 #pragma once
 #ifndef __NODE_H_INCLUDED__
 #define __NODE_H_INCLUDED__

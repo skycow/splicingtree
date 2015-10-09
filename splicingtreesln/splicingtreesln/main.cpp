@@ -1,3 +1,8 @@
+//Skyler Cowley
+//A01209720
+//ECE 5460
+//HW3
+
 #include<iostream>
 #include<fstream>
 #include<sstream>
@@ -49,6 +54,12 @@ int main() {
 	cout << "The area for NPE " << npe3 << " is ";
 	cout << cost(name, input, npe3) << endl;
 	
+	//keep open to see results
+	char exit;
+	cout << "Press any key to exit: ";
+	cin >> exit;
+
+
 	//exit program
 	return 0;
 }

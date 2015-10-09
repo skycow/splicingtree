@@ -1,3 +1,8 @@
+//Skyler Cowley
+//A01209720
+//ECE 5460
+//HW3
+
 #include "node.h"
 
 //node constructer that takes a char
