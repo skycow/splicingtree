@@ -93,10 +93,10 @@ double node::calculate() {
 		this->left->calculate();
 	}
 	
-	if (this->value == 'h')
-	//max add
-	this->dims = this->right->dims->calcDimsH(this->left->dims);
-
+	if (this->value == 'h') {
+		//max add
+		this->dims = this->right->dims->calcDimsH(this->left->dims);
+	}
 
 	//if (this->value == 'v')
 	//add max
@@ -185,7 +185,7 @@ void dim::discard(double h, double w){
 
 	if (this->next->next == NULL){
 
-		if (this->next->height > h && this->next->width > w){
+		if (this->next->height >= h && this->next->width >= w){
 			delete this->next;
 			this->next = NULL;
 			return;
@@ -196,7 +196,7 @@ void dim::discard(double h, double w){
 	}
 
 	
-	if (this->next->height > h && this->next->width > w){
+	if (this->next->height >= h && this->next->width >= w){
 		dim *temp = this->next->next;
 		delete this->next;
 		this->next = temp;
@@ -229,7 +229,7 @@ dim dim::min(){
 
 dim dim::min(double mh, double mw){
 	if (this->next == NULL){
-		if (this->height < mh && this->width < mw){
+		if (this->height <= mh && this->width <= mw){
 			dim ret(this->height, this->width);
 			return ret;
 		}
@@ -239,16 +239,16 @@ dim dim::min(double mh, double mw){
 		}
 	}
 	else{
-		dim minDim = this->min(this->height, this->width);
+		dim minDim(mh, mw);
+		if (this->height <= mh && this->width <= mw) {
+			minDim = this->next->min(this->height, this->width);
+		}
+		else {
+			minDim = this->next->min(mh, mw);
+		}
+		return minDim;
 	}
 }
-
-
-
-
-
-
-
 
 
 void node::printTree(int count) {
