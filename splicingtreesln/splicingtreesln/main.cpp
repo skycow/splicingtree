@@ -6,17 +6,20 @@
 
 using namespace std;
 
+//prototypes
 double cost(string[], double[][30], string);
 
+//this is the main function for calculating floor plan topologies
+//from the splicing method
 int main() {
 
-	//enum indexNames {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f, g, i, j, k, l };
-
+	//variable declerations
 	string name[30];
 	double input[2][30];
 	string line;
 	ifstream fin("input.txt");
 
+	//reading in the contents of the file
 	if (fin.is_open()) {
 		int count = 0;
 		while (getline(fin, line)) {
@@ -28,18 +31,24 @@ int main() {
 		}
 	}
 	else {
+		//file open error
 		cout << "Unable to open file." << endl;
 	}
 
-	string npe1 = "12v3v4v5v6v7v8v9vavbvcvdvevfvgvivjvkvlv";
-	string npe2 = "12h3h4h5h6h7h8h9hahbhchdhehfhghihjhkhlh";
-	//string npe3 = "213546H7VHVa8V9HcVHgHibdHkVHfeHVlHVjHVH";
-	string npe3 = "213546h7vhva8v9hcvhghibdhkvhfehvlhvjhvh";
+	//input NPEs
+	string npe1 = "12V3V4V5V6V7V8V9VaVbVcVdVeVfVgViVjVkVlV";
+	string npe2 = "12H3H4H5H6H7H8H9HaHbHcHdHeHfHgHiHjHkHlH";
+	string npe3 = "213546H7VHVa8V9HcVHgHibdHkVHfeHVlHVjHVH";
+
+	//output and cost call
+	cout << "The area for NPE " << npe1 << " is ";
 	cout << cost(name, input, npe1) << endl;
+	cout << "The area for NPE " << npe2 << " is ";
 	cout << cost(name, input, npe2) << endl;
+	cout << "The area for NPE " << npe3 << " is ";
 	cout << cost(name, input, npe3) << endl;
 	
-
+	//exit program
 	return 0;
 }
 
@@ -47,44 +56,44 @@ double cost(string name[], double input[][30], string npe) {
 	//create tree
 	node* root = NULL;
 
-	//insert nodes
+	//insert nodes beginning from the right side of the NPE
 	for (int i = 1; i <= npe.size(); i++) {
+		//current position
 		int curr = npe.size() - i; 
+		//current character value
 		char value = npe[curr];
 		node* temp;
 		double height, width;
-		if (value != 'h' && value != 'v') {
+		//if the value is a leaf value find the index
+		if (value != 'H' && value != 'V') {
 			int count = 0;
 			while (value != name[count][0]){
 				count++;
 			}
+			//calculate height and width for the leaf nodes
 			height = sqrt(input[0][count] / input[1][count]);
 			width = input[0][count] / height;
-
-			cout << height << " and " << width << endl;
-			
+			//create leaf node
 			temp = new node(value, height, width);
 		}
 		else {
+			//create h or v node
 			temp = new node(value);
 		}
-
+		//start the tree if it doesn't exist
 		if (root == NULL) {
 			
 			root = temp;
 		}
 		else {
+			//insert new nodes
 			root->insert(temp);
 		}
 
 	}
 
-	//print tree
-	if (root != NULL) {
-		root->printTree(0);
-	}
-
+	//calculates the area from the tree
 	double area = root->calculate();
-
+	//returns the area value to main
 	return area;
 }

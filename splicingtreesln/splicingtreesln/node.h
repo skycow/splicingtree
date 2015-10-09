@@ -9,28 +9,7 @@
 
 using namespace std;
 
-class dim {
-	double height;
-	double width;
-	dim* next;
-public:
-	dim(double, double);
-	void insert(dim*);
-	double findMin();
-	double findMin(double);
-	dim* calcDimsH(dim*);
-	dim* calcDimsH(double, double, dim*);
-	dim* calcDimsH(double, double);
-	dim* calcDimsV(dim*);
-	dim* calcDimsV(double, double);
-	void discard();
-	void discard(double, double);
-	dim min();
-	//dim min(dim);
-	dim min(double, double);
-
-};
-
+//this is the node class for the splicing tree algorithm
 class node {
 	char value;
 	node* left;
@@ -38,19 +17,16 @@ class node {
 	double height;
 	double width;
 	vector<pair<double, double>> dims;
-	double findMin();
+	
 public:
 	node(char);
 	node(char, double, double);
 	bool insert(node*);
-	void printTree(int);
+	double findMin();
 	double calculate();
 	void calculateH(vector<pair<double, double>>, vector<pair<double, double>>);
 	void calculateV(vector<pair<double, double>>, vector<pair<double, double>>);
 
 };
-
-
-
 
 #endif
