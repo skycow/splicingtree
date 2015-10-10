@@ -108,6 +108,16 @@ double node::findMin() {
 	return area;
 }
 
+
+bool checkForSmaller(vector<pair<double, double>> dimsList, pair<double, double> newIn){
+	for (int i = 0; i < dimsList.size(); i++) {
+		if (newIn.first >= dimsList[i].first && newIn.second >= dimsList[i].second){
+			return false;
+		}
+	}
+	return true;
+}
+
 //this function calculates the possible dimensions and orientations of an h node
 //it takes the two lists of dimensions and orientations from the h nodes children
 void node::calculateH(vector<pair<double, double>> right, vector<pair<double, double>> left) {
@@ -122,7 +132,10 @@ void node::calculateH(vector<pair<double, double>> right, vector<pair<double, do
 			}
 
 			pair<double, double> newDim(right[i].first + left[j].first, max);
-			this->dims.push_back(newDim);
+			if (checkForSmaller(this->dims, newDim)){
+				this->dims.push_back(newDim);
+			}
+			
 		}
 	}
 }
@@ -141,7 +154,9 @@ void node::calculateV(vector<pair<double, double>> right, vector<pair<double, do
 			}
 
 			pair<double, double> newDim(max, right[i].second + left[j].second);
-			this->dims.push_back(newDim);
+			if (checkForSmaller(this->dims, newDim)){
+				this->dims.push_back(newDim);
+			}
 		}
 	}
 }
