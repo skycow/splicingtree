@@ -46,14 +46,22 @@ int main() {
 	string npe2 = "12H3H4H5H6H7H8H9HaHbHcHdHeHfHgHiHjHkHlH";
 	string npe3 = "213546H7VHVa8V9HcVHgHibdHkVHfeHVlHVjHVH";
 
-	//output and cost call
-	cout << "The area for NPE " << npe1 << " is ";
-	cout << cost(name, input, npe1) << endl;
-	cout << "The area for NPE " << npe2 << " is ";
-	cout << cost(name, input, npe2) << endl;
-	cout << "The area for NPE " << npe3 << " is ";
-	cout << cost(name, input, npe3) << endl;
-	
+	//test
+	for (int i = 0; i < 10; i++){
+		//test
+
+		//output and cost call
+		cout << "The area for NPE " << npe1 << " is ";
+		cout << cost(name, input, npe1) << endl;
+		cout << "The area for NPE " << npe2 << " is ";
+		cout << cost(name, input, npe2) << endl;
+		cout << "The area for NPE " << npe3 << " is ";
+		cout << cost(name, input, npe3) << endl;
+
+		//test
+	}
+		//test
+
 	//keep open to see results
 	char exit;
 	cout << "Press any key to exit: ";
