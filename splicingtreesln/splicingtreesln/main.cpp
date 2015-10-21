@@ -47,7 +47,7 @@ int main() {
 	string npe3 = "213546H7VHVa8V9HcVHgHibdHkVHfeHVlHVjHVH";
 
 	//test
-	for (int i = 0; i < 10; i++){
+	//for (int i = 0; i < 10; i++){
 		//test
 
 		//output and cost call
@@ -58,15 +58,10 @@ int main() {
 		cout << "The area for NPE " << npe3 << " is ";
 		cout << cost(name, input, npe3) << endl;
 
-		//test
-	}
-		//test
-
 	//keep open to see results
-	char exit;
-	cout << "Press any key to exit: ";
-	cin >> exit;
-
+	cout << "Press enter to exit: ";
+        getchar();
+        //cin.get();
 
 	//exit program
 	return 0;

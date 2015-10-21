@@ -3,7 +3,6 @@
 //ECE 5460
 //HW3
 
-#pragma once
 #ifndef __NODE_H_INCLUDED__
 #define __NODE_H_INCLUDED__
 
@@ -21,7 +20,7 @@ class node {
 	node* right;
 	double height;
 	double width;
-	vector<pair<double, double>> dims;
+	vector<pair<double, double> > dims;
 	
 public:
 	node(char);
@@ -29,8 +28,8 @@ public:
 	bool insert(node*);
 	double findMin();
 	double calculate();
-	void calculateH(vector<pair<double, double>>, vector<pair<double, double>>);
-	void calculateV(vector<pair<double, double>>, vector<pair<double, double>>);
+	void calculateH(vector<pair<double, double> >, vector<pair<double, double> >);
+	void calculateV(vector<pair<double, double> >, vector<pair<double, double> >);
 
 };
 

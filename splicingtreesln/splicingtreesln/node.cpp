@@ -10,8 +10,8 @@ node::node(char newName) {
 	value = newName;
 	left = NULL;
 	right = NULL;
-	height = NULL;
-	width = NULL;
+	//height = NULL;
+	//width = NULL;
 	//dims = NULL;
 }
 
@@ -109,7 +109,7 @@ double node::findMin() {
 }
 
 
-bool checkForSmaller(vector<pair<double, double>> dimsList, pair<double, double> newIn){
+bool checkForSmaller(vector<pair<double, double> > dimsList, pair<double, double> newIn){
 	for (int i = 0; i < dimsList.size(); i++) {
 		if (newIn.first >= dimsList[i].first && newIn.second >= dimsList[i].second){
 			return false;
@@ -120,7 +120,7 @@ bool checkForSmaller(vector<pair<double, double>> dimsList, pair<double, double>
 
 //this function calculates the possible dimensions and orientations of an h node
 //it takes the two lists of dimensions and orientations from the h nodes children
-void node::calculateH(vector<pair<double, double>> right, vector<pair<double, double>> left) {
+void node::calculateH(vector<pair<double, double> > right, vector<pair<double, double> > left) {
 	for (int i = 0; i < right.size(); i++) {
 		for (int j = 0; j < left.size(); j++) {
 			double max;
@@ -142,7 +142,7 @@ void node::calculateH(vector<pair<double, double>> right, vector<pair<double, do
 
 //this function calculates the possible dimensions and orientations of an v node
 //it takes the two lists of dimensions and orientations from the v nodes children
-void node::calculateV(vector<pair<double, double>> right, vector<pair<double, double>> left) {
+void node::calculateV(vector<pair<double, double> > right, vector<pair<double, double> > left) {
 	for (int i = 0; i < right.size(); i++) {
 		for (int j = 0; j < left.size(); j++) {
 			double max;
