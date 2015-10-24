@@ -19,6 +19,17 @@ double cost(string[], double[][30], string);
 //from the splicing method
 int main() {
 
+        //Parameters
+        int nmoves = 10;
+	double ratio = 0.85;
+	int t0 = -1;
+	double lambdatf = 0.005;
+	int iseed = 3;
+	int n = 6;
+	double P = 0.99;
+	double epsilon = 0.001;
+	int N = nmoves*n;
+
 	//variable declerations
 	string name[30];
 	double input[2][30];
