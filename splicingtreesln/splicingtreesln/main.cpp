@@ -1,7 +1,7 @@
 //Skyler Cowley
 //A01209720
 //ECE 5460
-//HW3
+//HW4
 
 #include<iostream>
 #include<fstream>
