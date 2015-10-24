@@ -68,7 +68,51 @@ int main() {
 		cout << cost(name, input, npe2) << endl;
 		cout << "The area for NPE " << npe3 << " is ";
 		cout << cost(name, input, npe3) << endl;
+	
+	//HW4
+	int rand; //= random number
+	string E = npe3;
+	string E0 = npe3;
+	string best = E0;
+	int uphill = 0;
+	int T = t0;
+	//repeat1
+	{
+		int MT = 0;
+		int uphill = 0;
+		Reject = 0;
+		//repeat2
+		{
+			switch(rand%3){
+				case(0){
+					break;
+				}
+				case(1){
+					break;
+				}
+				case(2){
+					break;
+				}
+			}
+			MT += 1;
+			dCost = cost(newE) - cost(E);
+			if(dCost < 0 || Random < exp(-dCost/T)){
+				if(dCost > 0){
+					uphill += 1;
+					E = newE;
+				}
+				if(cost(E) < cost(best)){
+					best = E;
+				}
+			}else{
+				Reject += 1;
+		}while(uphill <= N && MT <= 2*N)
+		T = lambda*T;
+	}while(Reject/MT <= 0.95 && T > epsilon)
 
+
+	//end HW4
+	
 	//keep open to see results
 	cout << "Press enter to exit: ";
         getchar();
