@@ -70,44 +70,49 @@ int main() {
 		cout << cost(name, input, npe3) << endl;
 	
 	//HW4
-	int rand; //= random number
+	int Random; //= random number
 	string E = npe3;
 	string E0 = npe3;
 	string best = E0;
 	int uphill = 0;
 	int T = t0;
+	int Reject;
+	double dCost;
+	string newE;
+	int MT;
 	//repeat1
 	{
-		int MT = 0;
-		int uphill = 0;
+		MT = 0;
+		uphill = 0;
 		Reject = 0;
 		//repeat2
 		{
-			switch(rand%3){
-				case(0){
+			switch(Random%3){
+				case(0):{
 					break;
 				}
-				case(1){
+				case(1):{
 					break;
 				}
-				case(2){
+				case(2):{
 					break;
 				}
 			}
 			MT += 1;
-			dCost = cost(newE) - cost(E);
+			dCost = cost(name, input, newE) - cost(name, input, E);
 			if(dCost < 0 || Random < exp(-dCost/T)){
 				if(dCost > 0){
 					uphill += 1;
 					E = newE;
 				}
-				if(cost(E) < cost(best)){
+				if(cost(name, input, E) < cost(name, input, best)){
 					best = E;
 				}
 			}else{
 				Reject += 1;
+			}
 		}while(uphill <= N && MT <= 2*N)
-		T = lambda*T;
+		T = lambdatf*T;
 	}while(Reject/MT <= 0.95 && T > epsilon)
 
 
