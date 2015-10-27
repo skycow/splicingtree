@@ -70,7 +70,7 @@ int main() {
 		cout << cost(name, input, npe3) << endl;
 	
 	//HW4
-	int Random; //= random number
+	int Random = 2; //= random number
 	string E = npe3;
 	string E0 = npe3;
 	string best = E0;
@@ -78,7 +78,7 @@ int main() {
 	int T = t0;
 	int Reject;
 	double dCost;
-	string newE;
+	//string newE = E;
 	int MT;
 	//repeat1
 	{
@@ -87,17 +87,84 @@ int main() {
 		Reject = 0;
 		//repeat2
 		{
-			switch(Random%3){
-				case(0):{
+			string newE = E;
+			switch (/*Random%3*/1) {
+				//m1: swap adjecent operands 
+				case(0) : {
+
+					//get a random place in the string
+					//for (int i = 0; i < E.size(); i++) {
+						int mRand = Random%npe3.size();
+						//find an operand
+						while (E[mRand] == 'H' || E[mRand] == 'V') {
+							//move left
+							mRand -= 1;
+						}
+						if (mRand == 0) {
+							int mRand2 = mRand + 1;
+							while (npe3[mRand2] == 'H' || npe3[mRand2] == 'V') {
+								//move left
+								mRand2 += 1;
+							}
+							char temp = newE[mRand];
+							newE[mRand] = newE[mRand2];
+							newE[mRand2] = temp;
+						}
+						else {
+							int mRand2 = mRand - 1;
+							while (npe3[mRand2] == 'H' || npe3[mRand2] == 'V') {
+								//move left
+								mRand2 -= 1;
+							}
+							char temp = newE[mRand];
+							newE[mRand] = newE[mRand2];
+							newE[mRand2] = temp;
+						}
+						//cout << newE << endl;
+					//}
 					break;
 				}
-				case(1):{
+				//M2
+				case(1) : {
+					//cout << "s:" << E << endl;
+					//for (int i = 0; i < E.size(); i++) {
+						newE = E;
+						
+						int mRand = Random%E.size();
+						//find an operand
+						while (E[mRand] != 'H' && E[mRand] != 'V') {
+							//move right
+							mRand += 1;
+						}
+						//move to the right of the chain
+						while ((E[mRand] == 'H' || E[mRand] == 'V') && mRand != E.size() - 1) {
+							mRand += 1;
+						}
+						if (mRand != E.size() - 1) {
+							mRand -= 1;
+						}
+						while (E[mRand] == 'H' || E[mRand] == 'V') {
+							//change current
+							if (E[mRand] == 'H') {
+								newE[mRand] = 'V';
+							}
+							else {
+								newE[mRand] = 'H';
+							}
+							mRand -= 1;
+						}
+						//cout << "e:" << newE<<endl;
+					//}
 					break;
 				}
-				case(2):{
+				//M3
+				case(2) : {
 					break;
 				}
 			}
+			
+			
+			
 			MT += 1;
 			dCost = cost(name, input, newE) - cost(name, input, E);
 			if(dCost < 0 || Random < exp(-dCost/T)){
