@@ -87,82 +87,140 @@ int main() {
 		Reject = 0;
 		//repeat2
 		{
+			bool moved = true;
 			string newE = E;
-			switch (/*Random%3*/1) {
-				//m1: swap adjecent operands 
+			while (moved) {
+				switch (/*Random%3*/1) {
+					//m1: swap adjecent operands 
 				case(0) : {
 
 					//get a random place in the string
 					//for (int i = 0; i < E.size(); i++) {
-						int mRand = Random%npe3.size();
-						//find an operand
-						while (E[mRand] == 'H' || E[mRand] == 'V') {
+					int mRand = Random%npe3.size();
+					//find an operand
+					while (E[mRand] == 'H' || E[mRand] == 'V') {
+						//move left
+						mRand -= 1;
+					}
+					if (mRand == 0) {
+						int mRand2 = mRand + 1;
+						while (npe3[mRand2] == 'H' || npe3[mRand2] == 'V') {
 							//move left
-							mRand -= 1;
+							mRand2 += 1;
 						}
-						if (mRand == 0) {
-							int mRand2 = mRand + 1;
-							while (npe3[mRand2] == 'H' || npe3[mRand2] == 'V') {
-								//move left
-								mRand2 += 1;
-							}
-							char temp = newE[mRand];
-							newE[mRand] = newE[mRand2];
-							newE[mRand2] = temp;
+						char temp = newE[mRand];
+						newE[mRand] = newE[mRand2];
+						newE[mRand2] = temp;
+					}
+					else {
+						int mRand2 = mRand - 1;
+						while (npe3[mRand2] == 'H' || npe3[mRand2] == 'V') {
+							//move left
+							mRand2 -= 1;
 						}
-						else {
-							int mRand2 = mRand - 1;
-							while (npe3[mRand2] == 'H' || npe3[mRand2] == 'V') {
-								//move left
-								mRand2 -= 1;
-							}
-							char temp = newE[mRand];
-							newE[mRand] = newE[mRand2];
-							newE[mRand2] = temp;
-						}
-						//cout << newE << endl;
-					//}
+						char temp = newE[mRand];
+						newE[mRand] = newE[mRand2];
+						newE[mRand2] = temp;
+					}
+					//cout << newE << endl;
+				//}
 					break;
 				}
-				//M2
+						  //M2
 				case(1) : {
 					//cout << "s:" << E << endl;
 					//for (int i = 0; i < E.size(); i++) {
-						newE = E;
-						
-						int mRand = Random%E.size();
-						//find an operand
-						while (E[mRand] != 'H' && E[mRand] != 'V') {
-							//move right
-							mRand += 1;
+					newE = E;
+
+					int mRand = Random%E.size();
+					//find an operand
+					while (E[mRand] != 'H' && E[mRand] != 'V') {
+						//move right
+						mRand += 1;
+					}
+					//move to the right of the chain
+					while ((E[mRand] == 'H' || E[mRand] == 'V') && mRand != E.size() - 1) {
+						mRand += 1;
+					}
+					if (mRand != E.size() - 1) {
+						mRand -= 1;
+					}
+					while (E[mRand] == 'H' || E[mRand] == 'V') {
+						//change current
+						if (E[mRand] == 'H') {
+							newE[mRand] = 'V';
 						}
-						//move to the right of the chain
-						while ((E[mRand] == 'H' || E[mRand] == 'V') && mRand != E.size() - 1) {
-							mRand += 1;
+						else {
+							newE[mRand] = 'H';
 						}
-						if (mRand != E.size() - 1) {
-							mRand -= 1;
-						}
-						while (E[mRand] == 'H' || E[mRand] == 'V') {
-							//change current
-							if (E[mRand] == 'H') {
-								newE[mRand] = 'V';
-							}
-							else {
-								newE[mRand] = 'H';
-							}
-							mRand -= 1;
-						}
-						//cout << "e:" << newE<<endl;
-					//}
+						mRand -= 1;
+					}
+					//cout << "e:" << newE<<endl;
+				//}
 					break;
 				}
-				//M3
+						  //M3
 				case(2) : {
+					newE = E;
+					int mRand = Random%E.size();
+					bool check = false;
+
+					//check left
+					if (mRand != 0) {
+						//if h or v
+						if (E[mRand] == 'H' || E[mRand] == 'V') {
+							//if left is not h or v
+							if (E[mRand - 1] != 'H' && E[mRand - 1] != 'V') {
+								char temp = newE[mRand];
+								newE[mRand] = newE[mRand - 1];
+								newE[mRand - 1] = temp;
+								cout << "break 1" << endl;
+								check = true;
+							}
+						}
+						//if not h or v
+						else {
+							//if left is h or v
+							if (E[mRand - 1] == 'H' || E[mRand - 1] == 'V') {
+								char temp = newE[mRand];
+								newE[mRand] = newE[mRand - 1];
+								newE[mRand - 1] = temp;
+								cout << "break 2" << endl;
+								check = true;
+							}
+						}
+					}
+					else if (mRand != E.size() - 1) {
+						//if h or v
+						if (E[mRand] == 'H' || E[mRand] == 'V') {
+							//if left is not h or v
+							if (E[mRand + 1] != 'H' && E[mRand + 1] != 'V') {
+								char temp = newE[mRand];
+								newE[mRand] = newE[mRand + 1];
+								newE[mRand + 1] = temp;
+								cout << "break 3" << endl;
+								check = true;
+							}
+						}
+						//if not h or v
+						else {
+							//if left is h or v
+							if (E[mRand + 1] == 'H' || E[mRand + 1] == 'V') {
+								char temp = newE[mRand];
+								newE[mRand] = newE[mRand + 1];
+								newE[mRand + 1] = temp;
+								cout << "break 4" << endl;
+								check = true;
+							}
+						}
+					}
+					//if chekc is true then a move has occurred
+					moved = false;
+					cout << "false"<<endl;
 					break;
+				}
 				}
 			}
-			
 			
 			
 			MT += 1;
