@@ -19,17 +19,7 @@ double cost(string[], double[][30], string);
 //from the splicing method
 int main() {
 
-        //Parameters
-        int nmoves = 10;
-	double ratio = 0.85;
-	int t0 = -1;
-	double lambdatf = 0.005;
-	int iseed = 3;
-	int n = 6;
-	double P = 0.99;
-	double epsilon = 0.001;
-	int N = nmoves*n;
-
+    
 	//variable declerations
 	string name[30];
 	double input[2][30];
@@ -70,33 +60,57 @@ int main() {
 		cout << cost(name, input, npe3) << endl;
 	
 	//HW4
-	int Random = 2; //= random number
-	string E = npe3;
-	string E0 = npe3;
+	//Parameters
+		int nmoves = 10;
+	//double ratio = 0.85;
+	//int t0 = -1;
+	double lambdatf = 0.005;
+	int iseed = 3;
+	//int n = 6;
+	//double P = 0.99;
+	double epsilon = 0.001;
+	int N = npe3.size()*nmoves;
+
+	srand(3);
+
+
+
+
+
+	int Random;// = rand(); //= random number
+	
+	string E0 = npe3; //initial solution
+	string E = E0;
 	string best = E0;
+	int t0 = -1;
 	int uphill = 0;
+	int MT = 0;
 	int T = t0;
+
 	int Reject;
 	double dCost;
-	//string newE = E;
-	int MT;
+	string newE;
+	
 	//repeat1
-	{
+	do{
 		MT = 0;
 		uphill = 0;
 		Reject = 0;
 		//repeat2
-		{
-			bool moved = true;
-			string newE = E;
-			while (moved) {
-				switch (/*Random%3*/1) {
+		do{
+
+			bool moved = false;
+			while (!moved) {
+				newE = E; //?
+				Random = rand();
+				cout << "Random number: " << Random << endl;
+				switch (Random%3) {
 					//m1: swap adjecent operands 
 				case(0) : {
 
 					//get a random place in the string
 					//for (int i = 0; i < E.size(); i++) {
-					int mRand = Random%npe3.size();
+					int mRand = Random%E.size();
 					//find an operand
 					while (E[mRand] == 'H' || E[mRand] == 'V') {
 						//move left
@@ -124,6 +138,7 @@ int main() {
 					}
 					//cout << newE << endl;
 				//}
+					moved = true;
 					break;
 				}
 						  //M2
@@ -157,6 +172,7 @@ int main() {
 					}
 					//cout << "e:" << newE<<endl;
 				//}
+					moved = true;
 					break;
 				}
 						  //M3
@@ -214,9 +230,55 @@ int main() {
 							}
 						}
 					}
+					else {
+						break;
+						cout << "false" << endl;
+					}
 					//if chekc is true then a move has occurred
-					moved = false;
-					cout << "false"<<endl;
+					bool valid = false;
+					//check for balloting 
+					if (check) {
+						int operators = 0;//hv
+						int operands = 0;//#
+						int check1cnt = 0;
+						while (operands >= operators && check1cnt < newE.size()) {
+							if (newE[check1cnt] == 'H' || newE[check1cnt] == 'V') {
+								operators += 1;
+							}else{
+								operands += 1;
+							}
+							check1cnt += 1;
+						}
+						cout << "operands: " << operands << " and operators: " << operators << endl;
+						if(operands < operators) {
+							check = false;
+							cout << "check is false" << endl;
+						}
+					}
+					//check for normailization (double letter)
+					if (check) {
+						int check2cnt = 0;
+						while ((newE[check2cnt] != newE[check2cnt+1] ) && check2cnt < newE.size()-1) {
+							check2cnt += 1;
+						}
+
+						if (check2cnt == newE.size() - 1) {
+							if ((newE[check2cnt-1] == newE[check2cnt])) {
+								check = false;
+							}
+						}
+						else if ((newE[check2cnt] == newE[check2cnt + 1])) {
+							check = false;
+						}
+					}
+
+					if (!moved) {
+						if (check) {
+							moved = true;
+						}
+					}
+					//a move did not occur 
+					
 					break;
 				}
 				}
@@ -228,6 +290,7 @@ int main() {
 			if(dCost < 0 || Random < exp(-dCost/T)){
 				if(dCost > 0){
 					uphill += 1;
+					cout << "Uphill: " << uphill << endl;
 					E = newE;
 				}
 				if(cost(name, input, E) < cost(name, input, best)){
@@ -235,10 +298,13 @@ int main() {
 				}
 			}else{
 				Reject += 1;
+				cout << "Reject: " << Reject<<endl;
 			}
-		}while(uphill <= N && MT <= 2*N)
+			cout << uphill << " <= " << N << endl;
+			cout << MT << "<= " << 2 * N << endl;
+		}while (uphill <= N && MT <= 2 * N);
 		T = lambdatf*T;
-	}while(Reject/MT <= 0.95 && T > epsilon)
+	}while (Reject / MT <= 0.95 && T > epsilon);
 
 
 	//end HW4
